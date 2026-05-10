@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <title>🎰 Cyber-Slot RPG Casino</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;800&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div id="app" class="container">
+    <section id="lobby" class="panel">
+      <h1>CYBER CASINO <span>RPG</span></h1>
+      <div class="login-box">
+        <input id="nickname" placeholder="Ваш никнейм">
+        <input id="avatarUrl" placeholder="URL аватара (опционально)">
+        <button id="joinBtn">ВОЙТИ В ЗАЛ</button>
+      </div>
+    </section>
+
+    <section id="game" class="panel hidden">
+      <header>
+        <div id="players" class="players-list"></div>
+        <div class="stats">
+          <div id="balance">CREDITS: <span id="myBalance">0</span></div>
+        </div>
+      </header>
+
+      <div class="slot-container">
+        <div id="slotMachine" class="slot-machine"></div>
+        <div id="paylinesOverlay" class="paylines-overlay"></div>
+        <canvas id="particleCanvas"></canvas>
+      </div>
+
+      <div class="controls">
+        <div class="bet-control">
+          <label>BET:</label>
+          <input type="number" id="betAmount" min="1" value="10">
+        </div>
+        <button id="spinBtn">SPIN</button>
+      </div>
+
+      <div id="winLog" class="log"></div>
+
+      <div class="shop-section">
+        <h2>SKILL SHOP</h2>
+        <div id="shop" class="shop">
+          <button class="upgrade" data-key="auraLuck" data-cost="500">
+            ✨ Aura of Luck (+0.2% Wild) <br> <span class="cost">500</span>
+          </button>
+          <button class="upgrade" data-key="chipMagnet" data-cost="800">
+            🧲 Chip Magnet (1% Leech) <br> <span class="cost">800</span>
+          </button>
+          <button class="upgrade" data-key="hackerModule" data-cost="1200">
+            💻 Hacker Module (Shift Reel) <br> <span class="cost">1200</span>
+          </button>
+          <button class="upgrade" data-key="vip" data-cost="2000">
+            👑 VIP Status (Neon + x100) <br> <span class="cost">2000</span>
+          </button>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="client.js"></script>
+</body>
+</html>

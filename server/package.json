@@ -1,0 +1,14 @@
+{
+  "name": "slot-casino-multiplayer",
+  "version": "1.0.0",
+  "description": "Real-time multiplayer slot-machine with RPG upgrades",
+  "main": "index.js",
+  "type": "commonjs",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "dependencies": {
+    "socket.io": "^4.7.2",
+    "express": "^4.18.2"
+  }
+}
