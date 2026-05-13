@@ -34,9 +34,9 @@ const io = new Server(server, {
 
 app.use(express.static(path.join(__dirname, '..', 'public')));
 
-const db = loadUsers(); // Persistent DB by nickname
-const rooms = {}; // {roomId: {players: Set<socket.id>, timer: Timeout}}
-const users = {}; // {socket.id: {nickname, avatar, balance, upgrades, roomId}}
+const db = loadUsers();
+const rooms = {};
+const users = {};
 
 const MAX_PLAYERS_PER_ROOM = 6;
 const GLOBAL_EVENT_MIN_MS = 10 * 60 * 1000;
@@ -75,11 +75,11 @@ io.on('connection', (socket) => {
     const roomId = assignRoom(socket);
     const nick = nickname || 'Anon';
     
-    // Load from DB or create new
+
     if (!db[nick]) {
       db[nick] = {
         nickname: nick,
-        avatar: avatar || `https://api.dicebear.com/7.x/pixel-art/svg?seed=${nick}`,
+        avatar: avatar || `https:
         balance: 1000,
         upgrades: {
           auraLuck: 0,
@@ -110,7 +110,7 @@ io.on('connection', (socket) => {
     if (bet > user.balance) return socket.emit('error_msg', 'Insufficient balance');
 
     user.balance -= bet;
-    db[user.nickname].balance = user.balance; // Sync to DB
+    db[user.nickname].balance = user.balance;
 
     const wildBoost = Math.min(user.upgrades.auraLuck * 0.2, 2);
     const spinResult = spinReels(wildBoost);
@@ -118,7 +118,7 @@ io.on('connection', (socket) => {
 
     if (winInfo.payout > 0) {
       user.balance += winInfo.payout;
-      db[user.nickname].balance = user.balance; // Sync to DB
+      db[user.nickname].balance = user.balance;
     }
     
     saveUsers(db);
@@ -204,4 +204,4 @@ io.on('connection', (socket) => {
 });
 
 const PORT = process.env.PORT || 3000;
-server.listen(PORT, () => console.log(`🚀 Server on http://localhost:${PORT}`));
+server.listen(PORT, () => console.log(`🚀 Server on http:

@@ -36,7 +36,7 @@ initReels();
 
 document.getElementById('joinBtn').onclick = () => {
   const nick = document.getElementById('nickname').value || 'Игрок';
-  const avatar = document.getElementById('avatarUrl').value || `https://api.dicebear.com/7.x/pixel-art/svg?seed=${nick}`;
+  const avatar = document.getElementById('avatarUrl').value || `https:
   socket.emit('join', { nickname: nick, avatar });
   document.getElementById('lobby').classList.add('hidden');
   document.getElementById('game').classList.remove('hidden');
@@ -71,13 +71,13 @@ socket.on('room_state', ({ players }) => {
       balanceEl.textContent = currentBalance;
     }
   });
-  // Re-attach upgrade listeners after DOM update
+
   attachUpgradeListeners();
 });
 
 socket.on('spin_result', ({ playerId, spinResult, winInfo, balances }) => {
   if (playerId === myId) {
-    // Only deduct bet visually immediately
+
     currentBalance = balances[myId] - (winInfo.payout > 0 ? winInfo.payout : 0);
     balanceEl.textContent = currentBalance;
     
@@ -97,7 +97,7 @@ function animateReelsSequentially(matrix, winInfo, finalBalance) {
   let scattersFound = 0;
 
   reels.forEach((reel, col) => {
-    // Fast staggered start
+
     setTimeout(() => {
       reel.classList.remove('bounce');
       reel.classList.add('spinning');
@@ -107,16 +107,16 @@ function animateReelsSequentially(matrix, winInfo, finalBalance) {
       }
     }, col * 20);
 
-    // Base stop delay, quicker spin
+
     let stopDelay = 350 + col * 100;
 
-    // Count scatters for near‑miss logic
+
     for (let row = 0; row < 3; row++) {
       if (matrix[row][col] === 'SCATTER') scattersFound++;
     }
 
     if (col >= 2 && scattersFound >= 2) {
-      stopDelay += 1200; // longer pause for near‑miss
+      stopDelay += 1200;
       setTimeout(() => reel.classList.add('near-miss'), 30 + col * 100);
     }
 
@@ -129,7 +129,7 @@ function animateReelsSequentially(matrix, winInfo, finalBalance) {
       }
 
       if (col === 4) {
-        // After last reel settle, finish spin
+
         setTimeout(() => finishSpin(winInfo, finalBalance), 300);
       }
     }, stopDelay);
@@ -142,13 +142,13 @@ function finishSpin(winInfo, finalBalance) {
 
   if (winInfo.payout > 0) {
     dimNonWinningSymbols(winInfo.winningLines);
-    // Calculate total animation time for all winning lines
+
     const totalDelay = winInfo.winningLines.length * 600 + 500; 
     
     setTimeout(() => {
       addLog(`💰 ВЫИГРЫШ: ${winInfo.payout}!`, 'gold');
       launchConfetti();
-      // Update balance visually ONLY AFTER animation
+
       currentBalance = finalBalance;
       balanceEl.textContent = currentBalance;
     }, totalDelay);
@@ -160,7 +160,7 @@ function finishSpin(winInfo, finalBalance) {
       }, index * 600);
     });
   } else {
-    // If no win, just update balance (it already was updated minus bet)
+
     currentBalance = finalBalance;
     balanceEl.textContent = currentBalance;
   }
@@ -194,8 +194,8 @@ function clearPaylines() {
 }
 
 function drawPayline(line, count) {
-  // Use a fresh SVG for each line
-  const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+
+  const svg = document.createElementNS("http:
   svg.setAttribute("class", "payline-svg");
   svg.style.position = "absolute";
   svg.style.top = "0";
@@ -204,7 +204,7 @@ function drawPayline(line, count) {
   svg.style.height = "100%";
   svg.style.overflow = "visible";
   
-  const path = document.createElementNS("http://www.w3.org/2000/svg", "path");
+  const path = document.createElementNS("http:
   path.setAttribute("class", "payline-path");
   
   const overlayRect = paylinesOverlay.getBoundingClientRect();
